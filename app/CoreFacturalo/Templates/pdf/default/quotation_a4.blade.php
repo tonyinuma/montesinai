@@ -102,16 +102,20 @@
         </td>
     </tr>
     @endif
-    @if ($customer->telephone)
     <tr>
-        <td class="align-top">Teléfono Doctor:</td>
-        <td >
-            {{ $customer->telephone }}
-        </td>
+        @if ($customer->telephone)
+            <td class="align-top">Teléfono Doctor:</td>
+            <td >
+                {{ $customer->telephone }}
+            </td>
+        @else
+            <td class="align-top"></td>
+            <td>
+            </td>
+        @endif
         <td>Hora de Inicio:</td>
         <td>{{ \Carbon\Carbon::parse($appointment->admission_time)->format('h:i A') }}</td>
     </tr>
-    @endif
     <tr>
         <td class="align-top">Cotizado Por:</td>
         <td>

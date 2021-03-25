@@ -21,6 +21,7 @@ class PatientAppointmentRequest extends FormRequest
             'nationality' => ['required'],
             'date_entry' => ['required'],
             'time_entry' => ['required'],
+            'occupation' => ['required'],
             'date_exit' => ['required', 'after_or_equal:date_entry'],
             'time_exit' => ['required'],
             'room_type' => ['required'],
