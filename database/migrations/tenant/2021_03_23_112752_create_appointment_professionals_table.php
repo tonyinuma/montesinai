@@ -14,9 +14,9 @@ class CreateAppointmentProfessionalsTable extends Migration
     public function up()
     {
         Schema::create('appointment_professionals', function (Blueprint $table) {
-            $table->increments('id')->nullable();
-            $table->integer('appointment_id');
-            $table->integer('medical_professional_id');
+            $table->increments('id');
+            $table->integer('appointment_id')->nullable();
+            $table->integer('medical_professional_id')->nullable();
             $table->integer('status')->default(1)->nullable();
             $table->softDeletes();
             $table->timestamps();
