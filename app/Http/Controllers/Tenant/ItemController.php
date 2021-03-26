@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Exports\ItemExpireExport;
 use App\Imports\ItemsImport;
 use App\Models\Tenant\Catalogs\AffectationIgvType;
 use App\Models\Tenant\Catalogs\AttributeType;
@@ -47,6 +48,12 @@ class ItemController extends Controller
     {
 
         return view('tenant.items.index');
+    }
+
+    public function expire()
+    {
+
+        return view('tenant.items.expire.expire');
     }
 
     public function index_ecommerce()
@@ -542,18 +549,28 @@ class ItemController extends Controller
 
     public function export(Request $request)
     {
-        $date = $request->month_start . '-01';
-        $start_date = Carbon::parse($date);
-        $end_date = Carbon::parse($date)->addMonth()->subDay();
-        // dd($start_date.' - '.$end_date);
+        if ($request->month_start) {
+            $date = $request->month_start . '-01';
+            $start_date = Carbon::parse($date);
+            $end_date = Carbon::parse($date)->addMonth()->subDay();
+            // dd($start_date.' - '.$end_date);
 
-        $records = Item::whereBetween('created_at', [$start_date, $end_date])->get();
-        // dd(new ItemCollection($records));
+            $records = Item::whereBetween('created_at', [$start_date, $end_date])->get();
+            // dd(new ItemCollection($records));
 
-        return (new ItemExport)
-            ->records($records)
-            ->download('Reporte_Items_' . Carbon::now() . '.xlsx');
+            return (new ItemExport)
+                ->records($records)
+                ->download('Reporte_Items_' . Carbon::now() . '.xlsx');
+        } else {
 
+            $today = Carbon::now()->format('Y-m-d');
+            $range_due = Carbon::now()->addMonths(3)->format('Y-m-d');
+
+            $records = Item::where('date_of_due', '<=', $today)->orWhere('date_of_due', '<=', $range_due)->get();
+            return (new ItemExpireExport)
+                ->records($records)
+                ->download('Items_Expire.xlsx');
+        }
     }
 
     public function exportWp(Request $request)

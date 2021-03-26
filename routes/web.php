@@ -216,6 +216,8 @@ if ($hostname) {
             Route::get('items/export', 'Tenant\ItemController@export')->name('tenant.items.export');
             Route::get('items/export/wp', 'Tenant\ItemController@exportWp')->name('tenant.items.export.wp');
 
+            Route::get('expire', 'Tenant\ItemController@expire')->name('tenant.items.expire');
+
             //Persons
             Route::get('persons/columns', 'Tenant\PersonController@columns');
             Route::get('persons/tables', 'Tenant\PersonController@tables');

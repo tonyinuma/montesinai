@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Tenant;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ItemCollection extends ResourceCollection
@@ -57,6 +58,9 @@ class ItemCollection extends ResourceCollection
                 'purchase_has_igv_description' => $purchase_has_igv_description,
                 'sale_unit_price' => "{$row->currency_type->symbol} {$row->sale_unit_price}",
                 'purchase_unit_price' => "{$row->currency_type->symbol} {$row->purchase_unit_price}",
+                'date_of_due' => $row->date_of_due,
+                'today' => Carbon::now()->format('Y-m-d'),
+                'range_due' => Carbon::now()->addMonths(3)->format('Y-m-d'),
                 'created_at' => ($row->created_at) ? $row->created_at->format('Y-m-d H:i:s') : '',
                 'updated_at' => ($row->created_at) ? $row->updated_at->format('Y-m-d H:i:s') : '',
                 'warehouses' => collect($row->warehouses)->transform(function($row) {

@@ -422,6 +422,7 @@
                             {{ ($path[0] === 'purchase-quotations')?'nav-active nav-expanded':'' }}
                             {{ ($path[0] === 'purchase-orders')?'nav-active nav-expanded':'' }}
                             {{ ($path[0] === 'fixed-asset')?'nav-active nav-expanded':'' }}
+                            {{ ($path[0] === 'expire')?'nav-active nav-expanded':'' }}
                                 ">
                                 <a class="nav-link" href="#">
                                     <i class="fas fa-cart-plus" aria-hidden="true"></i>
@@ -439,6 +440,12 @@
                                     <li class="{{ ($path[0] === 'purchases' && $path[1] != 'create')?'nav-active':'' }}">
                                         <a class="nav-link" href="{{route('tenant.purchases.index')}}">
                                             Listado
+                                        </a>
+                                    </li>
+
+                                    <li class="{{ ($path[0] === 'expire')?'nav-active':'' }}">
+                                        <a class="nav-link" href="{{route('tenant.items.expire')}}">
+                                            Productos Vencidos
                                         </a>
                                     </li>
 
