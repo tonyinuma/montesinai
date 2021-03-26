@@ -74,11 +74,44 @@
                         </li>
                     @endif
 
+                    @if(in_array('clinic', $vc_modules))
+                        <li class="nav-parent {{ in_array($path[0],
+                            ['items', 'expire', 'purchases', 'medical_professionals', 'medical_services', 'appointments', 'medical_departments'])?'nav-active nav-expanded':'' }}">
+                            <a class="nav-link" href="#">
+                                <span class="float-right badge badge-red badge-danger mr-3">Nuevo</span>
+                                <i class="fas fa-capsules" aria-hidden="true"></i>
+                                <span>Farmacia</span>
+                            </a>
+                            <ul class="nav nav-children">
+                                <li class="{{ ($path[0] === 'items')?'nav-active':'' }}">
+                                    <a class="nav-link" href="{{route('tenant.items.index')}}">
+                                        Productos & Servicios
+                                    </a>
+                                </li>
+                                <li class="{{ ($path[0] === 'expire')?'nav-active':'' }}">
+                                    <a class="nav-link" href="{{route('tenant.items.expire')}}">
+                                        Productos Vencidos
+                                    </a>
+                                </li>
+                                <li class="{{ ($path[0] === 'purchases' && $path[1] === 'create')?'nav-active':'' }}">
+                                    <a class="nav-link" href="{{route('tenant.purchases.create')}}">
+                                        Ingeso/Compra Productos
+                                    </a>
+                                </li>
+                                <li class="{{ ($path[0] === 'purchases' && $path[1] != 'create')?'nav-active':'' }}">
+                                    <a class="nav-link" href="{{route('tenant.purchases.index')}}">
+                                        Listado de Compras
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+
                     @if(in_array('documents', $vc_modules))
                         <li class="
                         nav-parent
                         {{ ($path[0] === 'documents')?'nav-active nav-expanded':'' }}
-                        {{ ($path[0] === 'items')?'nav-active nav-expanded':'' }}
+                        {{--                        {{ ($path[0] === 'items')?'nav-active nav-expanded':'' }}--}}
                         {{ ($path[0] === 'persons' && $path[1] === 'customers')?'nav-active nav-expanded':'' }}
                         {{ ($path[0] === 'summaries')?'nav-active nav-expanded':'' }}
                         {{ ($path[0] === 'voided')?'nav-active nav-expanded':'' }}
@@ -414,41 +447,28 @@
                     @if(auth()->user()->type != 'integrator')
 
                         @if(in_array('purchases', $vc_modules))
-                            <li class="
-                            nav-parent
-                            {{ ($path[0] === 'purchases')?'nav-active nav-expanded':'' }}
+                            <li class="nav-parent
+{{--                            {{ ($path[0] === 'purchases')?'nav-active nav-expanded':'' }}--}}
                             {{ ($path[0] === 'persons' && $path[1] === 'suppliers')?'nav-active nav-expanded':'' }}
                             {{ ($path[0] === 'expenses')?'nav-active nav-expanded':'' }}
                             {{ ($path[0] === 'purchase-quotations')?'nav-active nav-expanded':'' }}
                             {{ ($path[0] === 'purchase-orders')?'nav-active nav-expanded':'' }}
-                            {{ ($path[0] === 'fixed-asset')?'nav-active nav-expanded':'' }}
-                            {{ ($path[0] === 'expire')?'nav-active nav-expanded':'' }}
-                                ">
+                            {{ ($path[0] === 'fixed-asset')?'nav-active nav-expanded':'' }}">
                                 <a class="nav-link" href="#">
                                     <i class="fas fa-cart-plus" aria-hidden="true"></i>
                                     <span>Compras</span>
                                 </a>
                                 <ul class="nav nav-children" style="">
-
-
                                     <li class="{{ ($path[0] === 'purchases' && $path[1] === 'create')?'nav-active':'' }}">
                                         <a class="nav-link" href="{{route('tenant.purchases.create')}}">
                                             Nuevo
                                         </a>
                                     </li>
-
                                     <li class="{{ ($path[0] === 'purchases' && $path[1] != 'create')?'nav-active':'' }}">
                                         <a class="nav-link" href="{{route('tenant.purchases.index')}}">
                                             Listado
                                         </a>
                                     </li>
-
-                                    <li class="{{ ($path[0] === 'expire')?'nav-active':'' }}">
-                                        <a class="nav-link" href="{{route('tenant.items.expire')}}">
-                                            Productos Vencidos
-                                        </a>
-                                    </li>
-
                                     <li class="{{ ($path[0] === 'purchase-orders')?'nav-active':'' }}">
                                         <a class="nav-link" href="{{route('tenant.purchase-orders.index')}}">
                                             Ordenes de compra
@@ -459,11 +479,9 @@
                                             Gastos diversos
                                         </a>
                                     </li>
-
                                     <li class="nav-parent
                                     {{ ($path[0] === 'persons' && $path[1] === 'suppliers')?'nav-active nav-expanded':'' }}
-                                    {{ ($path[0] === 'purchase-quotations')?'nav-active nav-expanded':'' }}
-                                        ">
+                                    {{ ($path[0] === 'purchase-quotations')?'nav-active nav-expanded':'' }}">
                                         <a class="nav-link" href="#">
                                             Proveedores
                                         </a>
@@ -483,7 +501,6 @@
                                             </li>
                                         </ul>
                                     </li>
-
                                     <li class="nav-parent
                                     {{ ($path[0] === 'fixed-asset' )?'nav-active nav-expanded':'' }}
                                         ">
